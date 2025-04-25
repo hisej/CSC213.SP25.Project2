@@ -37,3 +37,5 @@ public class ComplaintController {
         return "complaint"; // ← This maps to complaint.html
     }
 }
+
+// will have to implement search service here, jh 4/8

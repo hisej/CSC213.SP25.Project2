@@ -24,7 +24,9 @@ public class ComplaintEmbeddingMergeTest {
         ).withType(Complaint.class).build().parse();
 
         // Load embeddings
-        InputStream jsonlStream = getClass().getResourceAsStream("/embeddings_sample_1_30.jsonl");
+
+        InputStream jsonlStream = getClass().getResourceAsStream("/embeddings_sample_1_30_bk.jsonl");
+
         assertNotNull(jsonlStream, "JSONL file not found");
         Map<Long, double[]> embeddings = EmbeddingLoader.loadEmbeddings(jsonlStream);
 
