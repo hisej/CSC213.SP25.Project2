@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class ComplaintController {
@@ -36,6 +37,26 @@ public class ComplaintController {
 
         return "complaint"; // ← This maps to complaint.html
     }
-}
 
-// will have to implement search service here, jh 4/8
+    // adding a search bar to the ui, error with Collectors 4/28
+    @GetMapping("/search")
+    public String searchComplaints(@RequestParam(required = false) String company, Model model) {
+        if (company == null || company.trim().isEmpty()) {
+            model.addAttribute("error", "Please enter a company name.");
+            return "search";
+        }
+
+        List<Complaint> searchResults = complaints.stream()
+                .filter(complaint -> complaint.getCompany().toLowerCase().contains(company.toLowerCase()))
+                .collect(Collectors.toList());
+
+        if (searchResults.isEmpty()) {
+            model.addAttribute("error", "No complaints found for that company.");
+        } else {
+            model.addAttribute("searchResults", searchResults);
+        }
+
+        model.addAttribute("companySearch", company);
+        return "search";
+    }
+}

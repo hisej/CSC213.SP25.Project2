@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title>Search Results</title>
 </head>
@@ -11,8 +11,10 @@
     <button type="submit">Search</button>
 </form>
 
+<!-- Displaying Error Message -->
 <p th:if="${error != null}" th:text="${error}" style="color: red;"></p>
 
+<!-- Displaying Search Results -->
 <ul th:if="${searchResults != null}">
     <li th:each="complaint : ${searchResults}">
         <strong th:text="'Complaint ID: ' + ${complaint.complaintId}"></strong> —
@@ -20,7 +22,12 @@
     </li>
 </ul>
 
-<a href="/complaint">Back to Viewer</a>
+<!-- Displaying No Results Message -->
+<p th:if="${searchResults != null and searchResults.isEmpty()}" style="color: red;">
+    No complaints found for that company.
+</p>
+
+<a href="/complaint">Back to Complaint Viewer</a>
+
 </body>
 </html>
-
