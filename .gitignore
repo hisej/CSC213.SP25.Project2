@@ -39,3 +39,12 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+## Add files to exclude on github repo
+# .gitignore
+target/
+.idea/
+*.class
+*.log
+*.iml
+.DS_Store
