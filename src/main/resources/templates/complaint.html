@@ -6,15 +6,19 @@
 <body>
 <h2>Complaint ID: <span th:text="${complaint.complaintId}"></span></h2>
 
+
+<!-- Adding to show error if index isn't valid -->
+<p th:if="${error != null}" th:text="${error}" style="color: red;"></p>
+
 <!-- Displaying Complaint Details -->
-<p><strong>Date Received:</strong> <span th:text="${complaint.dateReceived}">[No Date]</span></p>
+<p><strong>Date Received:</strong> <span th:text="${complaint.dateReceivedStr}">[No Date]</span></p>
 <p><strong>Product:</strong> <span th:text="${complaint.product}">[No Product]</span></p>
 <p><strong>Sub-product:</strong> <span th:text="${complaint.subProduct}">[No Sub-product]</span></p>
 <p><strong>Issue:</strong> <span th:text="${complaint.issue}">[No Issue]</span></p>
 <p><strong>Sub-issue:</strong> <span th:text="${complaint.subIssue}">[No Sub-issue]</span></p>
 <p><strong>Narrative:</strong></p>
 <p th:text="${complaint.narrative}">[No Narrative]</p>
-<p><strong>Company Public Response:</strong> <span th:text="${complaint.companyPublicResponse}">[No Response]</span></p>
+<p><strong>Company Public Response:</strong> <span th:text="${complaint.publicResponse}">[No Response]</span></p>
 <p><strong>Company:</strong> <span th:text="${complaint.company}">[No Company]</span></p>
 <p><strong>State:</strong> <span th:text="${complaint.state}">[No State]</span></p>
 <p><strong>ZIP Code:</strong> <span th:text="${complaint.zipCode}">[No ZIP]</span></p>

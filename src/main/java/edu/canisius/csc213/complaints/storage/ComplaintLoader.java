@@ -27,8 +27,8 @@ public class ComplaintLoader {
         // TO-DO: Load CSV and JSONL resources, parse, and return hydrated Complaint list
         //InputStream csvStream = ComplaintLoader.class.getResourceAsStream(csvPath);
         //InputStream jsonlStream = ComplaintLoader.class.getResourceAsStream(jsonlPath);
-        InputStream csvStream = ComplaintLoader.class.getResourceAsStream("/complaints_test_1_30.csv");
-        InputStream jsonlStream = ComplaintLoader.class.getResourceAsStream("/embeddings_test_1_30.jsonl");
+       InputStream csvStream = ComplaintLoader.class.getResourceAsStream("/complaints_test_1_30.csv");
+       InputStream jsonlStream = ComplaintLoader.class.getResourceAsStream("/embeddings_test_1_30.jsonl");
 
 
         if (csvStream == null || jsonlStream == null) {

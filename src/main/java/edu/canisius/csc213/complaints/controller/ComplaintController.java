@@ -22,23 +22,34 @@ public class ComplaintController {
     }
 
     @GetMapping("/complaint")
-    public String showComplaint(@RequestParam(defaultValue = "0") int index, Model model) {
-        int max = complaints.size();
-        if (index < 0) index = 0;
-        if (index >= max) index = max - 1;
+    public String showComplaint(@RequestParam(defaultValue = "0") String index, Model model) {
+        int parsedIndex;
 
-        Complaint current = complaints.get(index);
+        try {
+            parsedIndex = Integer.parseInt(index);
+        } catch (NumberFormatException e) {
+            model.addAttribute("error", "Invalid complaint index. Showing default complaint.");
+            parsedIndex = 0;
+        }
+
+        int max = complaints.size();
+        if (parsedIndex < 0 || parsedIndex >= max) {
+            model.addAttribute("error", "Complaint index out of range. Showing default complaint.");
+            parsedIndex = 0;
+        }
+
+        Complaint current = complaints.get(parsedIndex);
         List<Complaint> similar = similarityService.findTop3Similar(current);
 
         model.addAttribute("complaint", current);
         model.addAttribute("similarComplaints", similar);
-        model.addAttribute("prevIndex", index > 0 ? index - 1 : 0);
-        model.addAttribute("nextIndex", index < max - 1 ? index + 1 : max - 1);
+        model.addAttribute("prevIndex", parsedIndex > 0 ? parsedIndex - 1 : 0);
+        model.addAttribute("nextIndex", parsedIndex < max - 1 ? parsedIndex + 1 : max - 1);
 
-        return "complaint"; // ← This maps to complaint.html
+        return "complaint";
     }
 
-    // adding a search bar to the ui, error with Collectors 4/28
+    // adding a search feature to the ui
     @GetMapping("/search")
     public String searchComplaints(@RequestParam(required = false) String company, Model model) {
         if (company == null || company.trim().isEmpty()) {
@@ -46,8 +57,10 @@ public class ComplaintController {
             return "search";
         }
 
+        String searchTerm = company.toLowerCase();
         List<Complaint> searchResults = complaints.stream()
-                .filter(complaint -> complaint.getCompany().toLowerCase().contains(company.toLowerCase()))
+                .filter(complaint -> complaint.getCompany() != null &&
+                        complaint.getCompany().toLowerCase().contains(searchTerm))
                 .collect(Collectors.toList());
 
         if (searchResults.isEmpty()) {

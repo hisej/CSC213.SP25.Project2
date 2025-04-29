@@ -67,7 +67,7 @@ public class Complaint {
     // === Constructors ===
 
     public Complaint() {
-        // Default constructor required for OpenCSV
+        // Required by OpenCSV
     }
 
     public Complaint(long complaintId, String narrative, double[] embedding) {
